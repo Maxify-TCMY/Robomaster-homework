@@ -44,16 +44,14 @@ pub fn configure(p: Peripherals) -> (crate::board::Usb, Ports, Option<Swd>) {
     let tx_buf: &mut [u8] = &mut *(&raw mut UART_TX_BUF);
     BufferedUart::new(
         p.UART7,
-        p.PE7,
-        p.PE8,
+        p.PE7,//rx
+        p.PE8,//tx
         rx_buf,
         tx_buf,
         Irqs,
         uart_cfg,
     )
 };
-
-
 
     let can = crate::board::can1(p.FDCAN1, p.PD0, p.PD1);
     (usb, Ports { can, uart: uart_inst.ok() }, swd)
